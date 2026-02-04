@@ -51,7 +51,7 @@ export function AdminLayout({ children, role }: AdminLayoutProps) {
               <Shield className="h-6 w-6" />
             </div>
             <div>
-              <h1 className="font-bold text-sm">KORLANTAS POLRI</h1>
+              <h1 className="font-bold text-sm">DITLANTAS POLDA JATENG</h1>
               <p className="text-xs text-sidebar-foreground/70">{roleLabel}</p>
             </div>
           </div>

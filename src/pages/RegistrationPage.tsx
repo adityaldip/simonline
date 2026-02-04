@@ -96,7 +96,7 @@ export default function RegistrationPage() {
                 <Shield className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">KORLANTAS POLRI</h1>
+                <h1 className="text-xl font-bold text-white">DITLANTAS POLDA JATENG</h1>
                 <p className="text-sm text-white/90">Pendaftaran SIM Online</p>
               </div>
             </div>
@@ -218,7 +218,7 @@ export default function RegistrationPage() {
       {/* Footer */}
       <footer className="border-t py-6 text-center text-sm text-muted-foreground">
         <div className="container">
-          <p>© 2026 KORLANTAS POLRI. Semua hak dilindungi.</p>
+          <p>© 2026 DITLANTAS POLDA JATENG. Semua hak dilindungi.</p>
         </div>
       </footer>
     </div>
