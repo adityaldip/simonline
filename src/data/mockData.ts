@@ -204,7 +204,7 @@ export const mockAdmins: Admin[] = [
   {
     id: 'admin-1',
     name: 'Super Admin',
-    email: 'superadmin@korlantas.go.id',
+    email: 'superadmin@ditlantas.poldajateng.go.id',
     role: 'SUPERADMIN',
     isActive: true,
     createdAt: '2025-01-01T00:00:00Z',
