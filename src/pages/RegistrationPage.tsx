@@ -88,21 +88,21 @@ export default function RegistrationPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-hero-gradient text-primary-foreground">
+      <header className="bg-hero-gradient text-white">
         <div className="container py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary-foreground/10">
-                <Shield className="h-8 w-8" />
+              <div className="p-2 rounded-lg bg-white/10">
+                <Shield className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">KORLANTAS POLRI</h1>
-                <p className="text-sm text-primary-foreground/80">Pendaftaran SIM Online</p>
+                <h1 className="text-xl font-bold text-white">KORLANTAS POLRI</h1>
+                <p className="text-sm text-white/90">Pendaftaran SIM Online</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <Link to="/admin">
-                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10">
+                <Button variant="ghost" size="sm" className="text-white/90 hover:text-white hover:bg-white/10">
                   <Building2 className="h-4 w-4 mr-2" />
                   Admin
                 </Button>
@@ -113,10 +113,10 @@ export default function RegistrationPage() {
       </header>
 
       {/* Hero Section */}
-      <div className="bg-hero-gradient text-primary-foreground pb-24 pt-8">
+      <div className="bg-hero-gradient text-white pb-24 pt-8">
         <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Formulir Pendaftaran SIM</h2>
-          <p className="text-primary-foreground/80 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Formulir Pendaftaran SIM</h2>
+          <p className="text-white/90 max-w-2xl mx-auto">
             Daftarkan permohonan SIM baru atau perpanjangan dengan mudah dan cepat
           </p>
         </div>
