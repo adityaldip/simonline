@@ -6,7 +6,7 @@ import { Step2DataPribadi } from '@/components/registration/Step2DataPribadi';
 import { Step3Confirmation } from '@/components/registration/Step3Confirmation';
 import { OrganizationSelector } from '@/components/registration/OrganizationSelector';
 import { RegistrationSuccess } from '@/components/registration/RegistrationSuccess';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight, Send, Building2, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { mockOrganizations, mockAvailabilitySlots } from '@/data/mockData';
@@ -128,33 +128,31 @@ export default function RegistrationPage() {
           <CardHeader className="border-b">
             <FormSteps steps={STEPS} currentStep={currentStep} />
           </CardHeader>
-          <CardContent className="p-6 md:p-8">
+          <CardContent className="p-4 sm:p-6 md:p-8">
             {/* Step 1: Pilih Lokasi */}
             {currentStep === 1 && (
-              <div className="animate-slide-up">
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-primary/10">
-                        <Building2 className="h-5 w-5 text-primary" />
-                      </div>
-                      <div>
-                        <CardTitle>Pilih Lokasi & Jadwal</CardTitle>
-                        <CardDescription>Pilih Polres dan jadwal kedatangan yang tersedia</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <OrganizationSelector
-                      organizations={mockOrganizations}
-                      slots={mockAvailabilitySlots}
-                      selectedOrgId={selectedOrgId}
-                      selectedSlotId={selectedSlotId}
-                      onSelectOrganization={handleSelectOrganization}
-                      onSelectSlot={handleSelectSlot}
-                    />
-                  </CardContent>
-                </Card>
+              <div className="animate-slide-up space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-primary/10 shrink-0">
+                    <Building2 className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold text-foreground leading-tight">
+                      Pilih Lokasi & Jadwal
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Pilih Polres dan jadwal kedatangan yang tersedia
+                    </p>
+                  </div>
+                </div>
+                <OrganizationSelector
+                  organizations={mockOrganizations}
+                  slots={mockAvailabilitySlots}
+                  selectedOrgId={selectedOrgId}
+                  selectedSlotId={selectedSlotId}
+                  onSelectOrganization={handleSelectOrganization}
+                  onSelectSlot={handleSelectSlot}
+                />
               </div>
             )}
 
