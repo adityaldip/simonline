@@ -101,7 +101,7 @@ export default function RegistrationPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Link to="/admin">
+              <Link to="/login">
                 <Button variant="ghost" size="sm" className="text-white/90 hover:text-white hover:bg-white/10">
                   <Building2 className="h-4 w-4 mr-2" />
                   Admin

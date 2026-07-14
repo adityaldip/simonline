@@ -23,19 +23,64 @@ import {
   Users,
   Clock,
   CheckCircle2,
-  XCircle,
   Search,
   Eye,
   MoreHorizontal,
 } from 'lucide-react';
 import { mockRegistrations, mockOrganizations } from '@/data/mockData';
-import { APPLICATION_TYPE_LABELS, SIM_CATEGORY_LABELS } from '@/types/registration';
+import { useAuth } from '@/contexts/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+import { getAdminRegistrations, getMyOrganization } from '@/lib/api';
+
+type DashboardRow = {
+  id: string;
+  registrationNumber: string;
+  applicantName: string;
+  applicationTypeLabel: string;
+  simCategoryLabel: string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED';
+  createdAt: string;
+};
 
 export default function AdminDashboard() {
-  // Filter for org-1 (simulating logged in admin for Semarang, Jawa Tengah)
-  const orgId = 'org-1';
-  const organization = mockOrganizations.find(org => org.id === orgId);
-  const registrations = mockRegistrations.filter(reg => reg.organizationId === orgId);
+  const { token, claims } = useAuth();
+  const orgId = claims?.activeTenantId ?? 'org-1';
+  const organizationQuery = useQuery({
+    queryKey: ['my-organization', orgId],
+    queryFn: () => getMyOrganization(token!),
+    enabled: Boolean(token && claims?.activeTenantId),
+  });
+  const organizationName =
+    organizationQuery.data?.name ??
+    mockOrganizations.find((org) => org.id === orgId)?.name ??
+    '';
+  const fallback: DashboardRow[] = mockRegistrations
+    .filter(reg => reg.organizationId === orgId)
+    .map(reg => ({
+      id: reg.id,
+      registrationNumber: reg.registrationNumber,
+      applicantName: reg.formData.nama,
+      applicationTypeLabel: reg.formData.jenisPermohonan,
+      simCategoryLabel: reg.formData.golonganSIM,
+      status: reg.status,
+      createdAt: reg.createdAt,
+    }));
+  const registrationsQuery = useQuery({
+    queryKey: ['admin-registrations', orgId],
+    queryFn: () => getAdminRegistrations(token!, orgId),
+    enabled: Boolean(token),
+  });
+  const registrations: DashboardRow[] = registrationsQuery.data
+    ? registrationsQuery.data.map((row) => ({
+        id: row.id,
+        registrationNumber: row.registrationNumber,
+        applicantName: row.applicantName,
+        applicationTypeLabel: 'BARU',
+        simCategoryLabel: 'A',
+        status: row.status,
+        createdAt: row.createdAt,
+      }))
+    : fallback;
 
   const pendingCount = registrations.filter(r => r.status === 'PENDING').length;
   const approvedCount = registrations.filter(r => r.status === 'APPROVED').length;
@@ -73,7 +118,7 @@ export default function AdminDashboard() {
         <div>
           <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
           <p className="text-muted-foreground">
-            Selamat datang, Admin {organization?.name}
+            Selamat datang, Admin {organizationName}
           </p>
         </div>
 
@@ -136,7 +181,7 @@ export default function AdminDashboard() {
               <div>
                 <CardTitle>Daftar Pendaftaran</CardTitle>
                 <CardDescription>
-                  Kelola pendaftaran SIM di {organization?.name}
+                  Kelola pendaftaran SIM di {organizationName}
                 </CardDescription>
               </div>
               <div className="flex items-center gap-2">
@@ -173,19 +218,29 @@ export default function AdminDashboard() {
                 </TableRow>
               </TableHeader>
               <TableBody>
+                {registrationsQuery.isLoading && (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                      Memuat data...
+                    </TableCell>
+                  </TableRow>
+                )}
+                {registrationsQuery.isError && (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-8 text-destructive">
+                      Gagal memuat data backend, menampilkan data contoh.
+                    </TableCell>
+                  </TableRow>
+                )}
                 {registrations.map((reg) => (
                   <TableRow key={reg.id}>
                     <TableCell className="font-medium font-mono text-sm">
                       {reg.registrationNumber}
                     </TableCell>
-                    <TableCell>{reg.formData.nama}</TableCell>
-                    <TableCell className="text-sm">
-                      {APPLICATION_TYPE_LABELS[reg.formData.jenisPermohonan]}
-                    </TableCell>
+                    <TableCell>{reg.applicantName}</TableCell>
+                    <TableCell className="text-sm">{reg.applicationTypeLabel}</TableCell>
                     <TableCell>
-                      <Badge variant="secondary">
-                        {SIM_CATEGORY_LABELS[reg.formData.golonganSIM]}
-                      </Badge>
+                      <Badge variant="secondary">{reg.simCategoryLabel}</Badge>
                     </TableCell>
                     <TableCell>{getStatusBadge(reg.status)}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">

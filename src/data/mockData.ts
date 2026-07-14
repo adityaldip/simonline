@@ -50,29 +50,44 @@ export const mockOrganizations: Organization[] = [
 ];
 
 // Mock Availability Slots (Jawa Tengah)
+// Availability dates are generated relative to today so the schedule picker
+// always shows today and upcoming days (never past dates).
+const slotDate = (offsetDays: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const today = slotDate(0);
+const tomorrow = slotDate(1);
+const dayAfterTomorrow = slotDate(2);
+
 export const mockAvailabilitySlots: AvailabilitySlot[] = [
   // Semarang
-  { id: 'slot-1', date: '2026-02-10', time: '08:00', capacity: 50, booked: 23, organizationId: 'org-1' },
-  { id: 'slot-2', date: '2026-02-10', time: '10:00', capacity: 50, booked: 45, organizationId: 'org-1' },
-  { id: 'slot-3', date: '2026-02-10', time: '13:00', capacity: 50, booked: 50, organizationId: 'org-1' },
-  { id: 'slot-4', date: '2026-02-11', time: '08:00', capacity: 50, booked: 12, organizationId: 'org-1' },
-  { id: 'slot-5', date: '2026-02-11', time: '10:00', capacity: 50, booked: 30, organizationId: 'org-1' },
-  { id: 'slot-6', date: '2026-02-12', time: '08:00', capacity: 50, booked: 5, organizationId: 'org-1' },
-  
+  { id: 'slot-1', date: today, time: '08:00', capacity: 50, booked: 23, organizationId: 'org-1' },
+  { id: 'slot-2', date: today, time: '10:00', capacity: 50, booked: 45, organizationId: 'org-1' },
+  { id: 'slot-3', date: today, time: '13:00', capacity: 50, booked: 50, organizationId: 'org-1' },
+  { id: 'slot-4', date: tomorrow, time: '08:00', capacity: 50, booked: 12, organizationId: 'org-1' },
+  { id: 'slot-5', date: tomorrow, time: '10:00', capacity: 50, booked: 30, organizationId: 'org-1' },
+  { id: 'slot-6', date: dayAfterTomorrow, time: '08:00', capacity: 50, booked: 5, organizationId: 'org-1' },
+
   // Surakarta
-  { id: 'slot-7', date: '2026-02-10', time: '08:00', capacity: 40, booked: 38, organizationId: 'org-2' },
-  { id: 'slot-8', date: '2026-02-10', time: '10:00', capacity: 40, booked: 20, organizationId: 'org-2' },
-  { id: 'slot-9', date: '2026-02-11', time: '08:00', capacity: 40, booked: 15, organizationId: 'org-2' },
-  
+  { id: 'slot-7', date: today, time: '08:00', capacity: 40, booked: 38, organizationId: 'org-2' },
+  { id: 'slot-8', date: today, time: '10:00', capacity: 40, booked: 20, organizationId: 'org-2' },
+  { id: 'slot-9', date: tomorrow, time: '08:00', capacity: 40, booked: 15, organizationId: 'org-2' },
+
   // Magelang
-  { id: 'slot-10', date: '2026-02-10', time: '08:00', capacity: 60, booked: 25, organizationId: 'org-3' },
-  { id: 'slot-11', date: '2026-02-10', time: '13:00', capacity: 60, booked: 55, organizationId: 'org-3' },
-  { id: 'slot-12', date: '2026-02-11', time: '08:00', capacity: 60, booked: 10, organizationId: 'org-3' },
-  
+  { id: 'slot-10', date: today, time: '08:00', capacity: 60, booked: 25, organizationId: 'org-3' },
+  { id: 'slot-11', date: today, time: '13:00', capacity: 60, booked: 55, organizationId: 'org-3' },
+  { id: 'slot-12', date: tomorrow, time: '08:00', capacity: 60, booked: 10, organizationId: 'org-3' },
+
   // Tegal
-  { id: 'slot-13', date: '2026-02-10', time: '08:00', capacity: 45, booked: 44, organizationId: 'org-4' },
-  { id: 'slot-14', date: '2026-02-10', time: '10:00', capacity: 45, booked: 30, organizationId: 'org-4' },
-  { id: 'slot-15', date: '2026-02-11', time: '08:00', capacity: 45, booked: 8, organizationId: 'org-4' },
+  { id: 'slot-13', date: today, time: '08:00', capacity: 45, booked: 44, organizationId: 'org-4' },
+  { id: 'slot-14', date: today, time: '10:00', capacity: 45, booked: 30, organizationId: 'org-4' },
+  { id: 'slot-15', date: tomorrow, time: '08:00', capacity: 45, booked: 8, organizationId: 'org-4' },
 ];
 
 // Mock Registrations
